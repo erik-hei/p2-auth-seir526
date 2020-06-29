@@ -63,5 +63,4 @@ module.exports = function(sequelize, DataTypes) {
     return user;
 };
 
-//remove any data formatting on the password when it is entered
-//return user model so we can actually use it in our database
+
