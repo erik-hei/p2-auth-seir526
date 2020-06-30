@@ -7,8 +7,7 @@ const session = require("express-session");
 const flash = (require("flash"));
 const passport = require("./config/ppCongig");
 const db = require("./models");
-//want to add a link to our custom middleware 
-    //check to see if a user isLoggedIn
+const isLoggedIn = require("./middleware/isLoggedIn");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 //App setup
@@ -43,14 +42,20 @@ app.use(flash());
 app.use(function(req, res, next){
     res.locals.alert = req.flash();
     res.locals.currentUser = req.user;
-
+    //find the next route that was supposed to be called
     next();
-})
+});
+
+
 
 //Routes
 app.get("/", function(req, res) {
     //longterm check to see if user is logged in
     res.render("index");
+})
+
+app.get("/profile", isLoggedIn, function(req, res) {
+    res.render("profile");
 })
 
 //include auth controller 
