@@ -21,7 +21,6 @@ router.post("/register", function(req, res) {
     }).then(function(user, created) {
         //if user was created
         if (created){
-            
             //authenticate user and start authorization process
             console.log("User created 🥥");
             res.redirect("/"); 
@@ -43,7 +42,7 @@ router.get("/login", function(req, res) {
 })
 
 //login post route
-yhrouter.post("/login", function(req, res, next){
+router.post("/login", function(req, res, next){
     passport.authenticate("local", function(error, user, info){
         //if no user authenticated
         if (!user) {
