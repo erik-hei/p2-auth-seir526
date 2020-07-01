@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const flash = require("flash");
+const flash = require('connect-flash');
 const passport = require("../config/ppConfig");
 
 //register get route
@@ -51,6 +51,7 @@ router.post("/login", function(req, res, next){
         //if no user authenticated
         if (!user) {
             req.flash("error", "Invalid username or password");
+                console.log("😔 error, dude")
                 return res.redirect("/auth/login");
             }
         if (error) {
@@ -63,8 +64,8 @@ router.post("/login", function(req, res, next){
             //if success save session and redirect user
             req.session.save(function(){
                 return res.redirect("/profile");
-            })
-        })
+            });
+        });
     })(req, res, next);
 });
 
