@@ -23,6 +23,10 @@ router.post("/register", function(req, res) {
         if (created){
             //authenticate user and start authorization process
             console.log("User created 🥥");
+            passport.authenticate("local", {
+                successRedirect: "/",
+                successFlash: "Thanks for signing up!"
+            })(req, res);
             res.redirect("/"); 
         } else {
             console.log("User email already exists. 🏴‍☠️");
@@ -54,7 +58,7 @@ router.post("/login", function(req, res, next){
         if (error) {
             return next(error);
         }
-        req.login(function(user, error){
+        req.login(user, function(error){
             if (error) next(error);
             //if success, flash success message
             req.flash("success", "You are validated and logged in.");
@@ -63,7 +67,7 @@ router.post("/login", function(req, res, next){
                 return res.redirect("/");
             })
         })
-    })
+    })(req, res, next);
 })
 
 router.post("/login", passport.authenticate("local", {
